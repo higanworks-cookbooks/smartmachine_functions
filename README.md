@@ -7,8 +7,24 @@ Chef patches, little fix and tools for joyent smartos(smartmachine).
 Usage
 -----
 
-Just add `recipe[smartmachine_functions]` to runlist for Fix pkgin provider.
+Just add `recipe[smartmachine_functions]` to runlist for Fix pkgin provider.  
+Or add other recipes.
 
+Recipes
+---
+
+### defaut
+
+Do nothing.  Dummy recipe to include libraries.
+
+### tools
+
+Add several tools to /opt/local/bin.
+
+### mdata_permission
+
+The smartmachine metadata has serious vulnerability such as anyone can get metadata.  
+To fix it, set mode 0700 to `/var/run/smartdc` directory.
 
 Fertures
 ----
@@ -16,6 +32,11 @@ Fertures
 ### BugFix: Override Chef::Provider::Package::SmartOS
 
 Package resource works well.
+
+
+### Security Fix: mdata socket vulnerability
+
+Fix metadata api vulnerability.
 
 ### Tool: `sm-summry_json`
 
