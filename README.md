@@ -38,7 +38,7 @@ Package resource works well.
 
 Fix metadata api vulnerability.
 
-### Tool: `sm-summry_json`
+### Tool: `sm-summary_json`
 
 This command prints out formatted sm-summary as json.
 
