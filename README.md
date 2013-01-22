@@ -23,7 +23,7 @@ Add several tools to /opt/local/bin.
 
 ### mdata_permission
 
-The smartmachine metadata has serious vulnerability such as anyone can get metadata.  
+The smartmachine metadata has serious vulnerability such as any localuser can get metadata.  
 To fix it, set mode 0700 to `/var/run/smartdc` directory.
 
 Fertures
