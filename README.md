@@ -1,7 +1,7 @@
 smartmachine_functions Cookbook
 ===============================
 
-Chef patches for joyent smartos(smartmachine).
+Chef patches, little fix and tools for joyent smartos(smartmachine).
 
 
 Usage
@@ -9,15 +9,23 @@ Usage
 
 Just add `recipe[smartmachine_functions]` to runlist.
 
+
 fertures
 ----
 
-* BugFix: Override Chef::Provider::Package::SmartOS
+### BugFix: Override Chef::Provider::Package::SmartOS
+
+Package resource works well.
+
+### Tool: `sm-summry_json`
+
+This command prints out formatted sm-summary as json.
+
+
 
 
 Contributing
 ------------
-TODO: (optional) If this is a public cookbook, detail the process for contributing. If this is a private cookbook, remove this section.
 
 e.g.
 1. Fork the repository on Github
