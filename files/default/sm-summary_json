@@ -1,0 +1,99 @@
+#!/usr/bin/bash
+#
+# Provides SmartMachine summary of information as json.
+# Joyent 2012.
+# JSON OPTION Author: https://github.com/sawanoboly HiganWorks LLC
+# Usage:
+# $ sm-summary -j
+
+PATH="/opt/local/bin:/opt/local/gnu/bin:/opt/local/sbin:/usr/bin:/usr/sbin";
+
+JSON=0
+OPT=
+while getopts j OPT
+do
+  case $OPT in
+    j) JSON=1
+       ;;
+  esac
+done
+shift `expr $OPTIND - 1`
+
+SM_UUID=$(zonename);
+SM_ID=$(zoneadm list -p | awk -F: '{ print $1 }');
+SM_HOSTNAME=$(hostname);
+
+if [[ -f /etc/product ]]; then
+        SM_IMAGE=$(cat /etc/product | grep "^Image:" | awk -F': ' '{ print $2 }') || SM_IMAGE="NA";
+        SM_IMAGE=${SM_IMAGE:-$(cat /etc/product | grep Dataset | awk '{ print $2 " " $3 }')} || SM_IMAGE="NA";
+        SM_IMAGE=${SM_IMAGE:-NA} || SM_IMAGE="NA";
+        SM_DOC=$(cat /etc/product | grep "^Documentation:" | awk -F': ' '{ print $2 }') || SM_DOC="NA";
+        SM_DOC=${SM_DOC:-NA} || SM_DOC="NA";
+        SM_BASEIMAGE=$(cat /etc/product | grep "^Base Image:" | awk -F': ' '{ print $2 }') || SM_BASEIMAGE="NA";
+        SM_BASEIMAGE=${SM_BASEIMAGE:-NA} || SM_BASEIMAGE="NA";
+else
+        SM_IMAGE="NA";
+        SM_DOC="NA";
+        SM_BASEIMAGE="NA";
+fi
+
+[[ -f /opt/local/etc/pkg_install.conf ]] && SM_PKGSRC=$(cat /opt/local/etc/pkg_install.conf | awk -F= '{ print $2 }') || SM_PKGSRC="Not installed";
+SM_BUILD=$(uname -v);
+SM_NPROCS=$(kstat -p -n nprocs_zone_${SM_ID} -s usage | awk '{ print $2 }');
+SM_MEMCAP=$(kstat -p -c zone_caps -n lockedmem_zone_${SM_ID} -s value | awk '{print $2/1024/1024 }');
+SM_MEMUSED=$(prstat -Z -s rss 1 1 | awk -v zone=${SM_UUID} '$8 ~ zone { printf("%d", $4 ) }');
+SM_MEMFREE=$(echo "${SM_MEMCAP}-${SM_MEMUSED}" | bc);
+SM_SWAPCAP=$(kstat -p -c zone_caps -n swapresv_zone_${SM_ID} -s value | awk '{ print $2/1024/1024 }');
+SM_SWAPUSED=$(kstat -p -c zone_caps -n swapresv_zone_${SM_ID} -s usage | awk '{ printf("%d", $2/1024/1024) }');
+SM_TMPUSED=$(du -hs /tmp | awk '{ print $1 }');
+SM_DISKQUOTA=$(df -h / | tail -1 | awk '{ print $2 }');
+SM_DISKUSED=$(df -P -h / | tail -1 | awk '{ print $5 }');
+
+case $JSON in
+  0)
+echo "* Gathering SmartMachine summary..";
+cat << EOF
+SM UUID             ${SM_UUID}
+SM ID               ${SM_ID}
+Hostname            ${SM_HOSTNAME}
+SmartOS build       ${SM_BUILD} 
+Image               ${SM_IMAGE}
+Base Image          ${SM_BASEIMAGE}
+Documentation       ${SM_DOC}
+Pkgsrc              ${SM_PKGSRC}
+Processes           ${SM_NPROCS}
+Memory (RSS) Cap    ${SM_MEMCAP}M
+Memory (RSS) Used   ${SM_MEMUSED}M
+Memory (RSS) Free   ${SM_MEMFREE}M
+Swap Cap            ${SM_SWAPCAP}M
+Swap Used           ${SM_SWAPUSED}M
+/tmp Used           ${SM_TMPUSED}
+Disk Quota          ${SM_DISKQUOTA}
+% Disk Used         ${SM_DISKUSED}
+EOF
+  ;;
+  1) 
+cat << EOF
+{
+"sm_uuid":             "${SM_UUID}",
+"sm_id":               "${SM_ID}",
+"hostname":            "${SM_HOSTNAME}",
+"smartos_build":       "${SM_BUILD}",
+"image":               "${SM_IMAGE}",
+"base_image":          "${SM_BASEIMAGE}",
+"documentation":       "${SM_DOC}",
+"pkgsrc":              "${SM_PKGSRC}",
+"processes":           "${SM_NPROCS}",
+"memory_rss_cap_mb":    "${SM_MEMCAP}",
+"memory_rss_used_mb":   "${SM_MEMUSED}",
+"memory_rss_free_mb":   "${SM_MEMFREE}",
+"swap_cap":            "${SM_SWAPCAP}",
+"swap_used":           "${SM_SWAPUSED}",
+"tmp_used":           "${SM_TMPUSED}",
+"disk_quota":          "${SM_DISKQUOTA}",
+"percentage_disk_used":         "${SM_DISKUSED}"
+}
+EOF
+  :
+  ;;
+esac

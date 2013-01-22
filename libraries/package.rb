@@ -79,7 +79,7 @@ class Chef
 
         def remove_package(name, version)
           Chef::Log.debug("#{@new_resource} removing package #{name} version #{version}") 
-          package = "#{name}"
+          package = name
           out = shell_out!("/opt/local/bin/pkgin -y remove #{package}", :env => nil)
         end
 

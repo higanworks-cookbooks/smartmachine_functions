@@ -1,23 +1,67 @@
 smartmachine_functions Cookbook
 ===============================
 
-Chef patches for joyent smartos(smartmachine).
+Chef patches, little fix and tools for joyent smartos(smartmachine).
 
 
 Usage
 -----
 
-Just add `recipe[smartmachine_functions]` to runlist.
+Just add `recipe[smartmachine_functions]` to runlist for Fix pkgin provider.  
+Or add other recipes.
 
-fertures
+Recipes
+---
+
+### defaut
+
+Do nothing.  Dummy recipe to include libraries.
+
+### tools
+
+Add several tools to /opt/local/bin.
+
+### mdata_permission
+
+The smartmachine metadata has serious vulnerability such as anyone can get metadata.  
+To fix it, set mode 0700 to `/var/run/smartdc` directory.
+
+Fertures
 ----
 
-* BugFix: Override Chef::Provider::Package::SmartOS
+### BugFix: Override Chef::Provider::Package::SmartOS
 
+Package resource works well.
+
+
+### Security Fix: mdata socket vulnerability
+
+Fix metadata api vulnerability.
+
+### Tool: `sm-summry_json`
+
+This command prints out formatted sm-summary as json.
+
+
+Test
+----
+
+This cookbook tested by ChefSpec and Foodcritic.
+
+### Run test
+
+Rspec
+<pre><code>bundle
+rake
+</code></pre>
+
+Foodcritic
+<pre><code>bundle
+rake fc
+</code></pre>
 
 Contributing
 ------------
-TODO: (optional) If this is a public cookbook, detail the process for contributing. If this is a private cookbook, remove this section.
 
 e.g.
 1. Fork the repository on Github
@@ -29,4 +73,4 @@ e.g.
 
 License and Authors
 -------------------
-Authors: TODO: List authors
+Authors: sawanoboryu@higanworks.com (HiganWorks LLC)
