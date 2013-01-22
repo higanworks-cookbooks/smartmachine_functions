@@ -7,17 +7,34 @@ Chef patches for joyent smartos(smartmachine).
 Usage
 -----
 
-Just add `recipe[smartmachine_functions]` to runlist.
+Just add `recipe[smartmachine_functions]` to runlist for Fix pkgin provider.
 
-fertures
+Fertures
 ----
 
-* BugFix: Override Chef::Provider::Package::SmartOS
+- BugFix: Override Chef::Provider::Package::SmartOS
 
+
+
+Test
+----
+
+This cookbook tested by ChefSpec and Foodcritic.
+
+### Run test
+
+Rspec
+<pre><code>bundle
+rake
+</code></pre>
+
+Foodcritic
+<pre><code>bundle
+rake fc
+</code></pre>
 
 Contributing
 ------------
-TODO: (optional) If this is a public cookbook, detail the process for contributing. If this is a private cookbook, remove this section.
 
 e.g.
 1. Fork the repository on Github
@@ -29,4 +46,4 @@ e.g.
 
 License and Authors
 -------------------
-Authors: TODO: List authors
+Authors: sawanoboryu@higanworks.com (HiganWorks LLC)
