@@ -9,7 +9,7 @@ module SmartMachine
     "69:7b43a1fd-a18b-4fda-a2fd-bda3354f04ff:running:/:7b43a1fd-a18b-4fda-a2fd-bda3354f04ff:native:excl:0".split(":")
   end
 
-  def kstat_zone_coucaps(id)
+  def kstat_zone_cpucaps(id)
     # `kstat -p -c zone_caps -n cpucaps_zone_#{id} -s value`
     "caps:69:cpucaps_zone_69:value\t200\n"
   end

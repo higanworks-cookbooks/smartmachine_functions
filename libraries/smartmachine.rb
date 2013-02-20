@@ -11,7 +11,7 @@ module SmartMachine
     `zoneadm list -p`.split(":")
   end
 
-  def kstat_zone_coucaps(id)
+  def kstat_zone_cpucaps(id)
     `kstat -p -c zone_caps -n cpucaps_zone_#{id} -s value`
   end
 
@@ -24,7 +24,7 @@ module SmartMachine
   end
 
   def sm_cpu_cap
-    kstat_zone_coucaps(sm_id).split("\t")[1].to_i
+    kstat_zone_cpucaps(sm_id).split("\t")[1].to_i
   end
 
   def sm_cpu_counts
