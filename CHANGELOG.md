@@ -2,6 +2,11 @@
 
 This file is used to list changes made in each version of smartmachine_functions.
 
+## v0.4.0
+
+* Add Library: Chef::Recipe::SmartMachine
+  * sm_id, sm_uuiid, sm_cpu_cap, sm_cpu_counts
+
 ## v0.3.0
 
 * Add Recipe: add_joyent_attributes

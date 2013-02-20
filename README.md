@@ -25,6 +25,39 @@ Fix metadata api vulnerability.
 
 This command prints out formatted sm-summary as json.
 
+### Library(module): Chef::Recipe::SmartMachine
+
+Retreive SmartMachine ZoneInfo. 
+
+#### Usage example in recipe
+
+<pre><code>class Chef::Recipe
+  include SmartMachine
+end
+
+a = sm_id
+b = sm_uuid
+c = sm_cpu_cap
+d = sm_cpu_counts
+
+file "/tmp/sm_id" do
+  content a #=> zone_id
+end
+
+file "/tmp/sm_uuid" do
+  content b #=> zone_uuiid
+end
+
+file "/tmp/sm_cpu_cap" do
+  content c.to_s #=> cpu cap ex) 200, 400
+end
+
+file "/tmp/sm_cpu_counts" do
+  content d.to_s #=> usable cpu cores by apps. (a rough estimate)
+end
+</code></pre>
+
+
 ### Chef-Integration
 
 Set joyent smartmachine's infomation as node attributes from sm-summary outputs.
