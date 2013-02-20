@@ -1,33 +1,32 @@
-require './libraries/smartmachine'
+require "./libraries/smartmachine"
+include SmartMachine
 
-describe SmartMachine do
-  before do
-    @dummy_class = double
-    @dummy_class.extend SmartMachine
-  end
-
+module SmartMachine
   describe "#sm_id" do
-    it "returns true when sm_id is extended" do
-      expect(@dummy_class.respond_to?(:sm_id)).to be_true
+    it "should see smartmachine id" do
+      sm_id.should =~(/[\d]+/)
     end
   end
 
   describe "#sm_uuid" do
-    it "returns true when sm_uuid is extended" do
-      expect(@dummy_class.respond_to?(:sm_uuid)).to be_true
+    it "should see smartmachine uuid" do
+      sm_uuid.should =~(/[\w\d]{8}-[\w\d]{4}-[\w\d]{4}-[\w\d]{4}-[\w\d]{12}/)
     end
   end
 
+
   describe "#sm_cpu_cap" do
-    it "returns true when sm_cpu_cap is extended" do
-      expect(@dummy_class.respond_to?(:sm_cpu_cap)).to be_true
+    it "should see smartmachine cpu cap from kstat" do
+      sm_cpu_cap.should be_kind_of(Fixnum)
+      sm_cpu_cap.divmod(100)[1].should == 0
     end
   end
 
   describe "#sm_cpu_counts" do
-    it "returns true when sm_cpu_counts is extended" do
-      expect(@dummy_class.respond_to?(:sm_cpu_counts)).to be_true
+    it "should see smartmachine cpu cores(virtual)" do
+      sm_cpu_counts.should be_kind_of(Fixnum)
+      sm_cpu_counts.should be > 0
     end
-  end
-
 end
+end
+
