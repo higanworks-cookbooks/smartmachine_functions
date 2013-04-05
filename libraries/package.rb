@@ -18,6 +18,7 @@
 # limitations under the License.
 #
 
+if Chef::VERSION < "11"
 class Chef
   class Provider
     class Package
@@ -87,4 +88,4 @@ class Chef
     end
   end
 end
-
+end
