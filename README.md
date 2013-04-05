@@ -15,7 +15,7 @@ Fertures
 
 ### BugFix: Override Chef::Provider::Package::SmartOS
 
-Package resource works well.
+Package resource works well at chef(version < 11).
 
 ### Security Fix: mdata socket vulnerability
 
@@ -57,6 +57,27 @@ file "/tmp/sm_cpu_counts" do
 end
 </code></pre>
 
+### Library(module): SmartMachine::Metadata
+
+#### Usage example in recipe
+
+Retreive metadata from SmartDatacenter MetadataAPI.
+
+as Class method in recipe.
+
+<pre><code>SmartMachine::Metadata.from_metadata("user-defined-data")
+</pre></code>
+
+or include at recipe.
+
+<pre><code>class Chef::Recipe
+  include SmartMachine::Metadata
+end
+
+from_metadata("user-defined-data")
+</code></pre>
+
+If missing key, `from_metadata` returns nil.
 
 ### Chef-Integration
 

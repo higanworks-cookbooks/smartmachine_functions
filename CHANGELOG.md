@@ -2,6 +2,11 @@
 
 This file is used to list changes made in each version of smartmachine_functions.
 
+## v0.5.0
+
+* Library: add module function SmartMachine::Metadata.from_metadata
+* Library: Do not Override Chef::Provider::Package::SmartOS when Chef::Version >= "11"
+
 ## v0.4.1
 
 * Bugfux: Fix: error occurred because "file not found" before converge recipe[tools].
