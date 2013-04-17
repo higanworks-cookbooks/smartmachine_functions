@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of smartmachine_functions.
 
+## v0.5.2
+
+* chomp as default from_metadata
+
 ## v0.5.1
 
 * Bugfix: typo moudle name x Meteadata o Metadata

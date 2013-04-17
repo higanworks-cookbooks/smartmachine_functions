@@ -42,7 +42,7 @@ module SmartMachine
     def self.from_metadata(key)
       cmd = Mixlib::ShellOut.new("/usr/sbin/mdata-get #{key}", :returns => [0,1])
       collect = cmd.run_command
-      collect.stdout if collect.exitstatus == 0
+      collect.stdout.chomp if collect.exitstatus == 0
     end
   end
 end
