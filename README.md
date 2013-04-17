@@ -79,6 +79,10 @@ from_metadata("user-defined-data")
 
 If missing key, `from_metadata` returns nil.
 
+#### in other recipe
+
+add dependency 'smartmachine_functions'  to `metadata.rb`. you can use `SmartMachine::Metadata.from_metadata` method in your recipe.
+
 ### Chef-Integration
 
 Set joyent smartmachine's infomation as node attributes from sm-summary outputs.
