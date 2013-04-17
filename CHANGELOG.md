@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of smartmachine_functions.
 
+## v0.5.1
+
+* Bugfix: typo moudle name x Meteadata o Metadata
+
 ## v0.5.0
 
 * Library: add module function SmartMachine::Metadata.from_metadata

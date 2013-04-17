@@ -35,7 +35,7 @@ end
 
 
 module SmartMachine
-  module Meatadata
+  module Metadata
     require 'mixlib/shellout'
 
     # retieve metadata returns String or nil.
